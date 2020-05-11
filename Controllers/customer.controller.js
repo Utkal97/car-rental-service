@@ -4,14 +4,6 @@ const modelCar_model = require('../Models/model_car.model');
 
 const extractData = require('../Utilities/extractData');
 
-const jwt = require('jsonwebtoken');
-
-const secret_key = process.env.SECRET_KEY || "custom secret key";
-const jwt_headers = {
-                        algorithm : 'HS256',
-                        expiresIn : 123459876
-                    }
-
 class CustomerController {
 
     async login(req, res) {
@@ -28,12 +20,8 @@ class CustomerController {
             if(!customer)
                 throw { message : "Invalid credentials"};
 
-            const token = jwt.sign({
-                                    email : customer.email,
-                                },
-                                secret_key,
-                                jwt_headers
-                            );
+            const generateKey = require('../Utilities/generateKey');
+            const token = generateKey(customer.email);
 
             res.status(200).json({'auth_token' : token });
             res.end();
@@ -48,67 +36,16 @@ class CustomerController {
         try {
             const filter = req.body;
 
-            // let available_cars = await car_model.find().select(`vehicle_number -_id`);
+            console.log("filter :-");
+            console.log(filter);
             
-            // available_cars = available_cars.map( (car) => { return car.vehicle_number; });
-            
-            // console.log("Total cars : ");
-            // console.log(available_cars);
-
-
             if(filter.hasOwnProperty('seat_capacity')) {
                 
-                let reqd_seated_cars = await car_model
-                                                .aggregate([ 
-                                                    {
-                                                        $lookup : {
-                                                            from : 'car-models',
-                                                            localField : 'model_id',
-                                                            foreignField : '_id',
-                                                            as : 'model_id'
-                                                        }
-                                                    },
-                                                    {
-                                                        $unwind : '$model_id'
-                                                    },
-                                                    {
-                                                        $match : {
-                                                            'model_id' : null
-                                                        }
-                                                    }
-                                                ]);
-
-                console.log("required_cars");
-                console.log(reqd_seated_cars);
             }
 
-            // if(filter.hasOwnProperty('at_time')) {
+            if(filter.hasOwnProperty('at_time')) {
 
-            //     const convert_time = require('../Utilities/addIndianTimeDifference');
-            //     const at_time = convert_time(new Date(filter.at_time));
-
-            //     let booked_cars = await car_model.find({
-            //         bookings : {
-            //             $elemMatch : {
-            //                 start_time : { $lt : at_time},
-            //                 end_time : { $gt : at_time}
-            //             }
-            //         }
-            //     }).select('vehicle_number -_id');
-
-            //     booked_cars = booked_cars.map((car) => {return car.vehicle_number});
-            //     console.log(booked_cars);
-            //     if(booked_cars.length >= 1) {
-
-            //         available_cars = available_cars.filter(function(car) {
-            //             return !booked_cars.includes(car);
-            //         });
-            //     }
-            // }
-            // console.log("After removing booked cars");
-            // console.log(available_cars);
-
-            // console.log("Filtered cars");
+            }
            
         }
         catch(err) {
@@ -188,7 +125,7 @@ class CustomerController {
                 res.status(200).send({car_details : car_details, car_model_details : car_model_details});
             }
             else
-                throw { message : "Couldn't find details of required car"};
+                throw { message : "Couldn't find details of required car" };
     
         }
         catch(err) {

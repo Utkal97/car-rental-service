@@ -1,4 +1,4 @@
-const car_model = require('./Models/car.model');
+const model = require('./Models/car.model');
 const database = require('./database.js');
 
 async function find() {
@@ -9,29 +9,33 @@ async function find() {
             "end_time" : "2020-05-09T14:00:00"
         };
         
+        console.log(data);
 
-        let overlap = await car_model.aggregate([{
-            "$match" : {
-                "bookings" : {
-                    "$elemMatch" : {
-                        "$or" : [
-                            { 
-                                "$and" : [
-                                    { start_time : { $lt : data.start_time} },
-                                    { end_time : { $gt : data.start_time } }
-                                ]
-                            },
-                            { 
-                                "$and" : [
-                                    { start_time : { $lt : data.end_time} },
-                                    { end_time : { $gt : data.end_time } }
+        let overlap = await model.aggregate([{
+                "$match" : {
+                        "vehicle_number" : data.vehicle_number,
+                        "bookings" : {
+                            "$elemMatch" : {
+                                
+                                    "$or" : [
+                                        { 
+                                            "$and" : [
+                                                { start_time : { $lt : data.start_time} },
+                                                { end_time : { $gt : data.start_time } }
+                                            ]
+                                        },
+                                    { 
+                                            "$and" : [
+                                                { start_time : { $lt : data.end_time} },
+                                                { end_time : { $gt : data.end_time } }
+                                            ]
+                                    }
                                 ]
                             }
-                        ]
-                    }
+                        }
+                    
                 }
-            }
-        }]);
+            }]);
         console.log("result :");
         console.log(overlap);
     }
@@ -39,6 +43,7 @@ async function find() {
         console.log("err");
         console.log(err);
     }
+    return;
 }
 
 find();

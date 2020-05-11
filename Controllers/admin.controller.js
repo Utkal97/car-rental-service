@@ -2,14 +2,6 @@ const admin_model = require('../Models/admin.model');
 const car_model = require('../Models/car.model');
 const modelCar_model = require('../Models/model_car.model');
 
-const jwt = require('jsonwebtoken');
-
-const secret_key = process.env.SECRET_KEY || "custom secret key";
-const jwt_headers = {
-                        algorithm : 'HS256',
-                        expiresIn : 123459876
-                    }
-
 function isValidVehicleNumber(input) {
     return input.match(/[a-zA-Z][a-zA-Z]\d\d[a-zA-Z][a-zA-Z]\d\d\d\d/i);
 }
@@ -17,11 +9,11 @@ function isValidVehicleNumber(input) {
 class AdminController {
 
     async login(req, res) {
-
-        const req_email = req.body.email;
-        const req_password = req.body.password;
-
         try {
+
+            const req_email = req.body.email;
+            const req_password = req.body.password;
+        
             const admin = await admin_model
                                     .findOne({email : req_email, password : req_password})
                                     .select(` -_id`);
@@ -29,12 +21,8 @@ class AdminController {
             if(!admin)
                 throw { message : "Invalid credentials"};
 
-            const token = jwt.sign({
-                                    email : admin.email,
-                                },
-                                secret_key,
-                                jwt_headers
-                            );
+            const generateKey = require('../Utilities/generateKey');
+            const token = generateKey( email );
 
             res.status(200).json({'auth_token' : token });
             res.end();
@@ -58,7 +46,7 @@ class AdminController {
 
             const model_car = await modelCar_model.findOne({ model : car.model });
             console.log(model_car);
-            
+
             if(!model_car) {
 
                 const modelCar_data = {
@@ -111,17 +99,17 @@ class AdminController {
             const isCurrentlyBooked = await car.isBooked(current_time);
 
             if(isCurrentlyBooked)
-                throw { message : "Currently the car is booked." };
+                throw { message : "Currently, the car is booked." };
 
             if(request_data.hasOwnProperty('latitude'))
                 car.setLatitude(request_data.latitude);
 
             if(request_data.hasOwnProperty('longitude'))
                 car.setLongitude(request_data.longitude);
-            
+
             if(request_data.hasOwnProperty('model_id'))
                 throw { message : "You can't change the model of a car" };
-            
+
             car.save()
                 .then( () => res.status(200).send("Updated car successfully"))
                 .catch(err => console.log(err.message));
@@ -136,7 +124,7 @@ class AdminController {
         try {
             const vehicle_number = req.body.vehicle_number;
 
-            //For checking if the car is currently booked
+            //checking if the car is currently booked
             const car = await car_model.findOne({ vehicle_number : vehicle_number });
             
             if(!car) 
@@ -149,7 +137,6 @@ class AdminController {
             if(isCurrentlyBooked)
                 throw { message : "Currently the car is booked." };
 
-            
             car_model.deleteOne({ vehicle_number : vehicle_number })
                 .then( () => res.status(200).send(`Deleted ${vehicle_number} successfully`))
                 .catch( err => { res.status(400).send(err.message);});

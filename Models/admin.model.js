@@ -15,12 +15,7 @@ const adminSchema = new mongoose.Schema({
     }
 })
 
-class Admin {
-    set setPassword(new_password) {
-        this.password = new_password;
-    }
-}
-
+const Admin = require('./Classes/admin.class');
 adminSchema.loadClass(Admin);
 
 module.exports = mongoose.model('Admin', adminSchema, 'admins');
