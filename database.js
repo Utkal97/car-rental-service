@@ -8,9 +8,9 @@ class Database {
     }
     
     _connect() {
-        const user = "utkal";
-        const user_password = "1234";
-        const database = "car-rental-service";
+        const user = process.env.DB_USERNAME;
+        const user_password = process.env.DB_PASSWORD;
+        const database = process.env.DB_NAME;
         
         const uri = `mongodb+srv://${user}:${user_password}@car-rental-service-ecvzz.gcp.mongodb.net/${database}?retryWrites=true&w=majority`
         mongoose.connect(uri, {useNewUrlParser : true, useCreateIndex : true })

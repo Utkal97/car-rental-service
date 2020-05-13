@@ -1,6 +1,6 @@
 const customer_model = require('../Models/customer.model');
 const car_model = require('../Models/car.model');
-const modelCar_model = require('../Models/model_car.model');
+const car_queries = require('./Queries/car.queries');
 
 const extractData = require('../Utilities/extractData');
 
@@ -35,8 +35,6 @@ class CustomerController {
 
         try {
             const filter = req.body;
-
-            const car_queries = require('./Queries/car.queries');
 
             let filtered_cars;
             if( filter.hasOwnProperty('seat_capacity') && 
@@ -129,26 +127,13 @@ class CustomerController {
         try {
             const vehicle_number = req.body.vehicle_number;
 
-            const car_details = await car_model
-                                        .findOne({ vehicle_number : vehicle_number})
-                                        .select(`-_id`);
+            const car_details = await car_queries.getCarDetails(vehicle_number);
 
-            const car_model_details = await modelCar_model
-                                        .findOne({ _id : car_details.model_id})
-                                        .select(`-_id`);
-            
-            if(car_details && car_model_details) {
-
-                //"model_id" of car lies in "__doc" property
-                delete car_details._doc.model_id;
-
-                console.log(car_details.getLocation());
-
-                res.status(200).send({car_details : car_details, car_model_details : car_model_details});
-            }
+            if(car_details)
+                res.status(200).send(car_details);
             else
                 throw { message : "Couldn't find details of required car" };
-    
+
         }
         catch(err) {
             console.log(`Error occured : ${err.message}`);

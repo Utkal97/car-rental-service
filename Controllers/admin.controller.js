@@ -14,15 +14,16 @@ class AdminController {
             const req_email = req.body.email;
             const req_password = req.body.password;
         
+            console.log(req.body.email);
             const admin = await admin_model
-                                    .findOne({email : req_email, password : req_password})
+                                    .findOne({ email : req_email, password : req_password})
                                     .select(` -_id`);
 
             if(!admin)
                 throw { message : "Invalid credentials"};
 
             const generateKey = require('../Utilities/generateKey');
-            const token = generateKey( email );
+            const token = generateKey( req_email );
 
             res.status(200).json({'auth_token' : token });
             res.end();
@@ -51,17 +52,17 @@ class AdminController {
 
                 const modelCar_data = {
                     model : car.model,
-                    seat_capacity : car.seat_capacity,
                     mileage : car.mileage,
                     rent_per_day : car.rent_per_day,
+                    seat_capacity : car.seat_capacity
                 }
 
                 modelCar_model.create(modelCar_data)
                     .then((document) => { 
-                        res.status(200).send(`added a new model ${car.model}`);
+                        res.status(200).send(`added a new model : ${car.model}`);
                         car.model_id = document._id;
                     })
-                    .catch(err => { throw err.message});
+                    .catch(err => console.log(err.message) );
             }
             else
                 car.model_id = model_car._id;

@@ -74,14 +74,14 @@ class Car {
                             "$or" : [
                                 { 
                                     "$and" : [
-                                        { start_time : { $lt : data.start_time} },
-                                        { end_time : { $gt : data.start_time } }
+                                        { start_time : { $lte : data.start_time} },
+                                        { end_time : { $gte : data.start_time } }
                                     ]
                                 },
                                 { 
                                     "$and" : [
-                                        { start_time : { $lt : data.end_time} },
-                                        { end_time : { $gt : data.end_time } }
+                                        { start_time : { $lte : data.end_time} },
+                                        { end_time : { $gte : data.end_time } }
                                     ]
                                 }
                             ]
@@ -89,9 +89,9 @@ class Car {
                     }
                 }
             }]);
- 
+
             if( overlapped_bookings.length >= 1 )
-                throw {message : "Requested slot not available."}
+                throw { message : "Requested slot not available." }
 
             const update = await this_model.updateOne({ _id : this._id }, {
                 $push : { 
