@@ -1,5 +1,5 @@
-const customer_model = require('./customer.model');
-const car_model = require('./car.model');
+const customer_model = require('../customer.model');
+const car_model = require('../car.model');
 
 class Booking {
 

@@ -32,23 +32,45 @@ class CustomerController {
     }
 
     async showCars(req, res) {
-        
+
         try {
             const filter = req.body;
 
-            console.log("filter :-");
-            console.log(filter);
-            
-            if(filter.hasOwnProperty('seat_capacity')) {
+            const car_queries = require('./Queries/car.queries');
+
+            let filtered_cars;
+            if( filter.hasOwnProperty('seat_capacity') && 
+                    !filter.hasOwnProperty('at_time') )
+            {
+                filtered_cars = await car_queries.filterBySeatCapacity(filter.seat_capacity);
                 
+                res.status(200).send(filtered_cars); 
+                return;
             }
 
-            if(filter.hasOwnProperty('at_time')) {
+            else if( filter.hasOwnProperty('at_time') && 
+                    !filter.hasOwnProperty('seat_capacity') ) 
+            {
+                filter.at_time = new Date(filter.at_time);
 
+                filtered_cars = await car_queries.filterByTime(filter.at_time);
+
+                res.status(200).send(filtered_cars);
+                return;
             }
-           
+
+            //if filter has to be done on both seat capacity and time for booking
+            else {
+
+                filter.at_time = new Date(filter.at_time);
+
+                filtered_cars = await car_queries.filterByTimeAndSeatCapacity(filter);
+
+                res.status(200).send(filtered_cars);
+            }
         }
         catch(err) {
+            console.log(err.message);
             res.status(400).send(err.message);
         }
     }

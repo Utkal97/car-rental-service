@@ -47,3 +47,23 @@ async function find() {
 }
 
 find();
+
+
+                                                            // .find()
+                                                            // .populate({
+                                                            //     path : "model_id",
+                                                            //     match : {
+                                                            //         seat_capacity : filter.seat_capacity
+                                                            //     }
+                                                            // })
+                                                            // .exec(function(err, cars) {
+                                                            //     if(err)
+                                                            //         throw err;
+                                                                
+                                                            //     console.log(cars);
+                                                            //     console.log("FILTERING");
+                                                            //     const result = cars.filter(car => 
+                                                            //         car.model_id 
+                                                            //     );
+                                                            //     return result;
+                                                            // });

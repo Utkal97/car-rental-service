@@ -1,4 +1,3 @@
-
 class Customer {
     get getName() {
         return `${this.name}`;

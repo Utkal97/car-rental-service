@@ -27,6 +27,13 @@ class Car {
         return this.bookings;
     }
 
+    static async getAllUnbookedCars(at_time) {
+        console.log("Getting all unbooked cars at given time");
+
+
+        return;
+    }
+
     async isBooked(at_time) {
 
         const model = this.constructor;
@@ -58,7 +65,7 @@ class Car {
             console.log(data);
 
             const this_model = this.constructor;
-            
+
             let overlapped_bookings = await this_model.aggregate([{
                 "$match" : {
                     "vehicle_number" : this.vehicle_number,
