@@ -1,0 +1,100 @@
+[
+    {
+        "name" : "login Customer",
+        "workflow" : [
+            "Credentials are checked against the user collection.", 
+            "If found, a json web token is created with a secret key and email as payload.",
+            "The created token is sent as response.",
+            "If not found, bad request message is sent to user."
+        ]
+    },
+    {
+        "name" : "Filter cars",
+        "workflow" : [
+            "An object is recieved that contains filter conditions.",
+            "The conditions can be `time`, `seat_capacity`.",
+            "The filter object can contain both conditions or either one of them.",
+            "If only `time` is given, the car collection is searched on the basis of availability.",
+            "Car list filtered on its availability at that time by going through its booking slots.",
+            "If only `seat_capacity` is given, the car collection is searched for required seating capacity.",
+            "If both are given, first car list is filtered on seating capacity and then based on availability (The reason for order is intuitive)."
+        ]
+    },
+    {
+        "name" : "Book a car",
+        "workflow" : [
+            "Booking requires customer to be authenticated. So, their token is verified.",
+            "Verification : Extract payload(email) from token, search for the email in database.",
+            "(Since the secret key is not revealed to anyone, this process is justified)",
+            "If token is corrupt or email is not found, immediately respond with error message",
+            "Check for vehicle_number in car collection.",
+            "If no such car exists in collection, immediately respond with error message.",
+            "Check for availability of car document, go through bookings and find if any slot overlaps with start_time or end_time",
+            "If it overlaps, immediately send error message",
+            "Add the new booking to database using UPDATE and not SAVE() because SAVE() doesn't handle concurrency.",
+            "Finally, send success response to user"
+        ]
+    },
+    {
+        "name" : "Get a car's details",
+        "workflow" : [
+            "vehicle_number is given in request body which is checked in car collection",
+            "If not found, immediately respond with error message",
+            "Respond with the fetched document. (the document doesn't contain any _id s involved with it."
+        ]
+    },
+    {
+        "name" : "login Admin",
+        "workflow" : [
+            "Credentials are checked against the admin collection.", 
+            "If found, a json web token is created with a secret key and email as payload.",
+            "The created token is sent as response.",
+            "If not found, bad request message is sent to user."
+        ]
+    },
+    {
+        "name" : "Add a car to the service",
+        "workflow" : [
+            "Adding car needs Administrator's privilege.",
+            "First extract payload(email) from json web token from request and check for it in admin collection.",
+            "If jwt is not present or corrupt or email is not present in admin collection, immediately respond with error message.",
+            "Check if the new car's vehicle number is already present in car collection.",
+            "If found, respond with error message since vehicle numbers must be unique.",
+            "If vehicle_number of new car is invalid, respond with error message.",
+            "Check if the car_model exists in car_model collection.",
+            "If it exists, just add car details to car collection.",
+            "Else, add car details to car collection and details of car model to car_model collection.",
+            "Finally, send success response to admin."
+        ]
+    },
+    {
+        "name" : "Update car details",
+        "workflow" : [
+            "Update car details needs Administrator's privilege.",
+            "First extract payload(email) from json web token from request and check for it in admin collection.",
+            "If jwt is not present or corrupt or email is not present in admin collection, immediately respond with error message.",
+            "For now only car details are editable ,i.e., car model details are not editable. So, one can change only latitude and longitude values of car.",
+            "Also, no one can change vehicle_number property of car since vehicle number doesn't change in real world.",
+            "Find the car document corresponding to given vehicle number.",
+            "If not found, immediately respond with error message.",
+            "Check if the car is currently booked",
+            "If booked currently, we shouldn't update car details, so respond with error message.",
+            "Update details of car.",
+            "Finally, send success response to admin."
+        ]
+    },
+    {
+        "name" : "Delete car",
+        "workflow" : [
+            "Deleting car needs Administrator's privilege.",
+            "First extract payload(email) from json web token from request and check for it in admin collection.",
+            "If jwt is not present or corrupt or email is not present in admin collection, immediately respond with error message.",
+            "Find the car document corresponding to given vehicle number.",
+            "If not found, immediately respond with error message.",
+            "Check if the car is currently booked",
+            "If booked currently, we shouldn't delete car, so respond with error message.",
+            "Delete details of car.",
+            "Finally, send success response to admin."
+        ]
+    }
+]

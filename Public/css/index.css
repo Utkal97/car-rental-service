@@ -1,0 +1,23 @@
+#dev:link {
+    color: rgb(171, 253, 171);
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+#dev:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+#dev:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+#dev:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}

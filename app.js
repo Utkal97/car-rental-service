@@ -10,6 +10,16 @@ try {
     
     app.use(express.json());
 
+    app.use(express.static(__dirname + '/Public'));
+
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'ejs');
+    app.get('/', (req, res) => { res.render("index", { 
+            api_calls : require('./content/api_calls.json'),
+            feature_details : require('./content/feature_details.json')
+        }); 
+    });
+
     app.use('/api/admin', admin_routes);
     app.use('/api/customer', customer_routes);
     

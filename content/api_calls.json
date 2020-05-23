@@ -1,0 +1,74 @@
+[
+    {
+        "method": "POST",
+        "route" : "/customer/login",
+        "request_body" : ["email", "password"],
+        "response" : {
+            "success" : "status: 200 and json web token for the customer account",
+            "failure" : "status: 400 and message=invalid credentials"
+        }
+    },
+    {
+        "method": "GET",
+        "route" : "/customer/show_cars",
+        "request_body" : [ "object representing filter"],
+        "response" : {
+            "success" : "status : 200 and list of cars with their details.",
+            "failure" : "status: 400"
+        }
+    },
+    {
+        "method": "POST",
+        "route" : "/customer/book_car",
+        "request_body" : ["jwt of user", "vehicle number of car", "booking start time","booking end time"],
+        "response" : {
+            "success" : "status : 200 and message=booking complete.",
+            "failure" : "status: 400 and message=booking failed."
+        }
+    },
+    {
+        "method": "GET",
+        "route" : "/customer/car_details",
+        "request_body" : [ "vehicle number of the car"],
+        "response" : {
+            "success" : "status : 200 and json data containing details of car.",
+            "failure" : "status : 404 and message=no such car exists."
+        }
+    },
+    {
+        "method": "POST",
+        "route" : "/admin/login",
+        "request_body" : ["email", "password"],
+        "response" : {
+            "success" : "status: 200 and jwt for the admin account.",
+            "failure" : "status: 400 and message=invalid credentials"
+        }
+    },
+    {
+        "method": "POST",
+        "route" : "/admin/add_car",
+        "request_body" : ["jwt of admin", "json data of new car to be added"],
+        "response" : {
+            "success" : "status: 200 and message=Successfully added car to the service.",
+            "failure" : "status: 400 and message=couldn't add car."
+        }
+    },
+    {
+        "method" : "PUT",
+        "route" : "/admin/update_car",
+        "request_body" : ["jwt of admin", "json data of updated details of car"],
+        "response" : {
+            "success" : "status: 200 and message=Successfully updated car.",
+            "failure" : "status: 400 and message=couldn't update car."
+        }
+    },
+    {
+        "method" : "DELETE",
+        "route" : "/admin/delete_car",
+        "request_body" : ["jwt of admin", "vehicle number of car to be deleted"],
+        "response" : {
+            "success" : "status: 200 and message=Successfully deleted the car.",
+            "failure" : "status: 400 and message=couldn't delete car."
+        }
+    }
+]

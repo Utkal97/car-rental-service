@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Car Rental Service</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="/css/index.css" >
+</head>
+<body>
+
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="/images/logo.png" width="45" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            Car Rental Service
+        </a>
+        <div class="nav-item active">
+            <a class="nav-link" href="https://github.com/Utkal97" id="dev">
+                <img src="/images/dev.jpeg" width="45" height="45" class="d-inline-block align-top" alt="" loading="lazy">
+                MEET the DEV
+            </a>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <p class="lead"> 
+                The server for Utkal's car rental service. Built using Node.js, Expressjs and MongoDB.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="nav nav-tabs mt-3">
+
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="api-tab" href="#api-calls" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">
+                  API calls
+              </a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="details-tab" href="#details" data-toggle="tab" role="tab" aria-controls="details" aria-selected="false">
+                    How it works
+                </a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="test-tab" href="#test" data-toggle="tab" role="tab" aria-controls="test" aria-selected="false">
+                    Test the APIs
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active p-5" id="api-calls" role="tabpanel" aria-labelledby="api-tab">
+               
+                BASE URI : <a href="https://damian-car-rental-service.herokuapp.com/api/" class="ml-3">https://damian-car-rental-service.herokuapp.com/api/</a>
+
+                <% api_calls.forEach( (api) => { %>
+                    <div class="card text-white bg-info mb-3 mt-3" style="max-width: 50rem;">
+                        <div class="card-body">
+
+                            <h5 class="card-title">  
+                                <%= api.method %> <%= api.route %>
+                            </h5>
+
+                            <p class="card-text">
+                                Request body includes (json format): <%= api.request_body %>
+                                <br />
+                                Response :
+                                <ul>
+                                    <li> success => <%= api.response.success %> </li>                            
+                                    <li>failure => <%= api.response.failure %> </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <div class="tab-pane fade p-5" id="details" role="tabpanel" aria-labelledby="details-tab">
+                
+                <% feature_details.forEach( (feature) => { %>
+                    <div class="card text-white bg-success mb-3 mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">  
+                                <%= feature.name %>
+                            </h5>
+                            <p class="card-text">
+                                <ul>
+                                <% feature.workflow.forEach( (level) => { %>
+                                    <li><%= level %></li>
+                                <% }); %>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <div class="tab-pane fade" id="test" role="tabpanel" aria-labelledby="test-tab">
+                <div class="m-5">
+
+                    <div class="m-3">
+                        Sample administrator credentials :
+                        <ul>
+                            <li>email : admin1@gmail.com</li>
+                            <li>password : admin1pa$$</li>
+                        </ul> 
+                        
+                        Sample customer credentials :
+                        <ul>
+                            <li>email : customer1@yahoo.com</li>
+                            <li>password : customer1pa$$</li>
+                        </ul>
+
+                        Sample vehicle number : AP09AZ5045
+                        
+                    </div>
+
+                    If you have postman client, here is the .json collection file. 
+                    Import the json into postman and test them.
+                    <button type="button" class="btn btn-primary ">
+                        <a href="/js/Postman_collection.json" style="color: aliceblue;">Download Postman collection</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
