@@ -1,6 +1,7 @@
 # car-rental-service
 
-A car rental api service built with Nodejs, Expressjs and MongoDB.
+A car rental api service built with Nodejs, Expressjs and MongoDB. <br />
+Link to the server : *https://damian-car-rental-service.herokuapp.com/*
 
 ------------
 
