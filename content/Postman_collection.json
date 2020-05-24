@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "c5e87300-490e-4f5d-b30d-069e3b904941",
+		"name": "Postman test - Car Rental Service",
+		"description": "Testing APIs provided by Car rental service.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"admin1@gmail.com\",\n\t\"password\" : \"admin1pa$$\"\n}"
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/admin/login",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"admin",
+						"login"
+					]
+				},
+				"description": "Login administrator."
+			},
+			"response": []
+		},
+		{
+			"name": "Add car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth_token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE1ODkzNzMzNjUsImV4cCI6MTcxMjgzMzI0MX0.7Y-L0wfpTqTd28yX5Q3j9zpc2d5HCR4nMyt2eTY5fXA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"model\":\"Lamborghini Reventon\",\n\t\"vehicle_number\":\"TN22FE1112\",\n\t\"mileage\":3.2,\n\t\"rent_per_day\":\"111790\",\n\t\"seat_capacity\":\"2\",\n\t\"bookings\":[],\n\t\"latitude\":17.2695,\n\t\"longitude\":52.6547\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/admin/add_car",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"admin",
+						"add_car"
+					]
+				},
+				"description": "Add a car with given specifications"
+			},
+			"response": []
+		},
+		{
+			"name": "Car details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"vehicle_number\" : \"AP11AZ5195\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/customer/car_details",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"customer",
+						"car_details"
+					]
+				},
+				"description": "Given vehicle number, get details of the car."
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\" : \"customer1@yahoo.com\",\n\t\"password\" : \"customer1pa$$\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/customer/login",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"customer",
+						"login"
+					]
+				},
+				"description": "Login customer with email and password"
+			},
+			"response": []
+		},
+		{
+			"name": "Book a car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth_token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1c3RvbWVyMUB5YWhvby5jb20iLCJpYXQiOjE1ODkzNzM1MDIsImV4cCI6MTcxMjgzMzM3OH0.EyQw6JzECZAcOgDgsiFDlj3LdN_4jO_WbiFAHQrvh84",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"vehicle_number\" : \"AP09AZ5045\",\n\t\"start_time\" : \"2020-05-12T15:00:00\",\n\t\"end_time\" : \"2020-05-19T14:00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/customer/book_car",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"customer",
+						"book_car"
+					]
+				},
+				"description": "Book a car given its vehicle number and customer token"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Car",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth_token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE1ODkzNzQwMjksImV4cCI6MTcxMjgzMzkwNX0.SSy_zi8_m07RbIQBgAX4cev1nWAQPJsmnSTLQTUN-f4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"vehicle_number\" : \"TN22FE1112\",\n\t\"latitude\" : 52.1245,\n\t\"longitude\" : 73.3425\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/admin/update_car",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"admin",
+						"update_car"
+					]
+				},
+				"description": "Update a car given its vehicle number."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth_token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE1ODkzNzQwMjksImV4cCI6MTcxMjgzMzkwNX0.SSy_zi8_m07RbIQBgAX4cev1nWAQPJsmnSTLQTUN-f4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"vehicle_number\" : \"TN22FE1112\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/admin/delete_car",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"admin",
+						"delete_car"
+					]
+				},
+				"description": "Delete a car given its vehicle number"
+			},
+			"response": []
+		},
+		{
+			"name": "Show available cars",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"at_time\" : \"2020-05-01T10:30:00.000+00:00\",\n\t\"seat_capacity\" : 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://damian-car-rental-service.herokuapp.com/api/customer/show_cars",
+					"protocol": "https",
+					"host": [
+						"damian-car-rental-service",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"customer",
+						"show_cars"
+					]
+				},
+				"description": "Show available cars based on filters:\nDatetime,\nSeating Capacity.\n\nYou can also choose one of them at a time or both."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

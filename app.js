@@ -23,7 +23,7 @@ try {
     app.use('/api/admin', admin_routes);
     app.use('/api/customer', customer_routes);
     
-    const PORT = process.env.PORT;
+    const PORT = process.env.PORT || 8000;
     app.listen(PORT, () => {
         console.log(`Service is up and is running on port : ${PORT}.`);
     });
