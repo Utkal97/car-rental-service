@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const customer_controller = require('../Controllers/customer.controller');
-const isAuthenticated = require('../Utilities/isAuthenticated');
+const isAuthenticated = require('../Middlewares/isAuthenticated');
 
 router.post('/login', customer_controller.login);
     

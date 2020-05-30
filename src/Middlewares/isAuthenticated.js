@@ -1,4 +1,4 @@
-const extractData = require('./extractData');
+const extractData = require('../Utilities/extractData');
 
 const isAuthenticated = async function(req, res, next) {
 
@@ -32,6 +32,7 @@ const isAuthenticated = async function(req, res, next) {
     }
     catch(error) {
         console.log(`Error : ${error.message}`);
+        res.status(401).send(`Not authenticated.`);
     }
 }
 

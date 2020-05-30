@@ -4,7 +4,8 @@
     "description": "An Car Rental API service built with Node.js, Expressjs and MongoDB.",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js"
+        "start": "node src/app.js",
+        "devStart": "nodemon src/app.js"
     },
     "author": "Utkal97",
     "license": "ISC",
@@ -15,5 +16,9 @@
         "mongoose": "^5.9.12",
         "mongoose-beautiful-unique-validation": "^7.1.1",
         "validator": "^13.0.0"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "nodemon": "^2.0.4"
     }
 }
